@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/sign-up.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/custom-tailwind.js"></script>
+    <title>Document</title>
+</head>
+
+<body class="font-cursive h-full"> 
+    <header class="text-white">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <span class="ml-3 text-2xl text-primary">E-Commerce</span>
+            </a>
+            <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+                <a class="mr-5">First Link</a>
+                <a class="mr-5">Second Link</a>
+                <a class="mr-5">Third Link</a>
+                <a class="mr-5">Fourth Link</a>
+            </nav>
+            <a class="inline-flex items-center bg-primary border-0 py-2 px-12 focus:outline-none hover:bg-primary_hover rounded text-base mt-4 md:mt-0" href="./sign-up.html">
+                Signup for free
+            </a>
+        </div>
+    </header>
+    <section>
+        <h1 class="text-3xl lg:text-4xl xl:text-5xl font-bold text-primary text-center font-cursive mb-5">Create Account</h1>        
+        <div class="w-full md:w-96 mx-auto border border-gray-300 shadow-lg p-4 md:p-8 rounded-lg bg-white">        
+            <form action="http://localhost:8080/api/users/sign-up" method="post" id="signupForm">
+                <label for="FirstName">FirstName</label>
+                <input class="form-input" type="text" name="FirstName" id="FirstName" required>
+
+                <label for="LastName">LastName</label>
+                <input class="form-input" type="text" name="LastName" id="LastName" required>
+
+                <label for="UserName">UserName</label>
+                <input class="form-input" type="text" name="UserName" id="UserName" required>
+
+                <label for="Phone">Phone</label>
+                <input class="form-input" type="number" name="Phone" id="Phone" required>
+
+                <label for="Email">Email</label>
+                <input class="form-input" type="email" name="Email" id="Email" required>
+                
+                <label for="Password">Password</label>
+                <input class="form-input" type="password" name="Password" id="Password" required>
+                
+                <label for="Address">Address</label>
+                <input class="form-input" type="text" id="Address" required>
+                
+                <label for="role">Role</label>
+                <select name="role" id="role"required>
+                    <option value="role">Choose Your Roles</option>
+                    <option value="User">User</option>
+                    <option value="Vendor">Vendor</option>
+                </select>
+
+                <input type="button" onclick="submitForm()" class="font-cursive text-2xl mt-4 mb-4 bg-primary py-1 hover:bg-primary_hover cursor-pointer text-white" id="submitButton" value="Submit">
+            </form>
+            <p id="responseMessage"></p>
+        </div>
+    </section>
+    <footer class="px-10 text-base font-cursive flex justify-between text-white mt-10">    
+        <p>Created by SamiKhan2</p>
+        <ul>
+            <li><a href="http://">Github</a></li>
+        </ul>
+    </footer>
+    <script>
+        function submitForm() {
+          const form = document.getElementById('signupForm');
+          const formData = new FormData(form);
+    
+          fetch('http://localhost:8080/api/users/sign-up', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(Object.fromEntries(formData)),
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            alert('User registered successfully.');
+            form.reset();
+          })
+          .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            alert('Registration failed. Please try again.');
+          });
+        }
+      </script>
+</body>
+
+</html>
